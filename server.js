@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
@@ -13,15 +12,19 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json())
 
-const db = require("./app/models");
-db.sequelize.sync({ force: true }).then(() => {
-    console.log("Drop and re-sync db.");
-  });
+const db = require("./models");
+db.sequelize.sync();
+// db.sequelize.sync({ force: true }).then(() => {
+//     console.log("Drop and re-sync db.");
+//   });
 
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to christian application." });
 });
+
+// routes
+require("./routes/post.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
