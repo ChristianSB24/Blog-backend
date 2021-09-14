@@ -3,6 +3,7 @@ const cors = require("cors");
 
 const app = express();
 
+//Accepts calls from any host
 app.use(cors())
 
 app.use(express.urlencoded({extended: true}));
